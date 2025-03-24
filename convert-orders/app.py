@@ -52,7 +52,7 @@ def convert(df):
             }
         )
         .reset_index()
-        .sort_values("date")
+        .sort_values("date", ascending=False)
     )
 
     return df
