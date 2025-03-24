@@ -1,3 +1,4 @@
+import io
 import streamlit as st
 import pandas as pd
 
@@ -75,13 +76,16 @@ def main():
             records = load_data(uploaded_file)
             st.success("Excel file successfully uploaded and processed!")
             ppt_buffer = convert(records)
-            ppt_buffer = convert(records)
-            csv_data = ppt_buffer.to_csv(index=False).encode('utf-8')
+            excel_buffer = io.BytesIO()
+            ppt_buffer.to_excel(excel_buffer, index=False, engine='openpyxl')
+            excel_buffer.seek(0)  # Important: reset buffer position to the beginning
+
+            # Provide Excel file for download
             st.download_button(
-                label="Download Converted Orders",
-                data=csv_data,
-                file_name="converted_orders.csv",
-                mime="text/csv",
+                label="Download Converted Orders (Excel)",
+                data=excel_buffer,
+                file_name="converted_orders.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
         except Exception as e:
             st.error(f"An error occurred while generating the presentation: {e}")
