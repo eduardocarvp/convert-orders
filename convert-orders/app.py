@@ -31,16 +31,16 @@ def count(row):
         nb_ca = row["quantity"]
         nb_cs = row["quantity"]
 
-    return row["order_number"], nb_ga4, nb_ga5, nb_ca, nb_cs, nb_o, row["total"]
+    return row["order_number"], row["timestamp"], nb_ga4, nb_ga5, nb_ca, nb_cs, nb_o, row["total"]
 
 
 def convert(df):
     df = df.apply(count, axis=1, result_type="expand")
-    df.columns = ["name", "GE - A4", "GE - A5", "CA", "CS", "OFFRE", "total"]
+    df.columns = ["name", "date", "GE - A4", "GE - A5", "CA", "CS", "OFFRE", "total"]
 
 
     df = (
-        df.groupby("name")
+        df.groupby(["name", "date"])
         .agg(
             {
                 "GE - A4": "sum",
@@ -52,6 +52,7 @@ def convert(df):
             }
         )
         .reset_index()
+        .sort_values("date")
     )
 
     return df
