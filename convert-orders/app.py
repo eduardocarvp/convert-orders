@@ -67,9 +67,6 @@ def main():
         products used in those orders.
         """
     )
-
-    # Let the user specify the sheet name; default is "sheet1"
-    sheet_name = st.text_input("Sheet Name", value="Cantons+")
     
     uploaded_file = st.file_uploader("Upload CSV File", type=["csv"])
     if uploaded_file is not None:
