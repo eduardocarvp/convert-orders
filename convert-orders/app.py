@@ -15,7 +15,7 @@ def count(row):
         if row["options"] == "Format:A5":
             nb_ga5 = row["quantity"]
 
-    if row["name"] == "Agenda cantons":
+    if row["name"] == "Agenda cantons romands":
         nb_ca = row["quantity"]
 
     if row["name"].startswith("Offre genevoise"):
