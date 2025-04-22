@@ -9,11 +9,14 @@ def load_data(uploaded_file):
 
 def count(row):
     nb_ga4, nb_ga5, nb_ca, nb_cs, nb_o = 0, 0, 0, 0, 0
-    if row["name"].startswith("Agenda genevois"):
-        if row["options"] == "Format:A4":
-            nb_ga4 = row["quantity"]
-        if row["options"] == "Format:A5":
-            nb_ga5 = row["quantity"]
+    if (
+        row["name"].startswith("Agenda genevois") and row["options"] == "Format:A4"
+    ) or (row["name"] == "Agenda genevois A4"):
+        nb_ga4 = row["quantity"]
+    if (
+        row["name"].startswith("Agenda genevois") and row["options"] == "Format:A5"
+    ) or (row["name"] == "Agenda genevois A5"):
+        nb_ga5 = row["quantity"]
 
     if row["name"] == "Agenda cantons romands":
         nb_ca = row["quantity"]
